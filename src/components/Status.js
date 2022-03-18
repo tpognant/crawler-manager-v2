@@ -21,7 +21,7 @@ class Status extends Component {
                 <Form style={{ padding:"10%" }}>
                     <Form.Group className="mb-3">
                         <Form.Label>Frequency</Form.Label>
-                        <Form.Control type="type" placeholder="Enter frequence" />
+                        <Form.Control type="type" placeholder="Enter frequency" />
                         <Form.Text className="text-muted">
                             If you need to crawl only one time in 5 minute, use these frequency: {nextFrequency}
                         </Form.Text>
@@ -29,6 +29,10 @@ class Status extends Component {
                     <Form.Group className="mb-3">
                         <Form.Label>Topology name</Form.Label>
                         <Form.Control type="type" placeholder="Enter topology name" />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Tags</Form.Label>
+                        <Form.Control type="type" placeholder="Enter tags" />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Inputs</Form.Label>

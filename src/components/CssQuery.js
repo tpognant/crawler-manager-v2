@@ -1,31 +1,37 @@
 import React, {Component} from 'react';
+import Crawls from "./Crawls";
 
 class CssQuery extends Component {
 
+    state = {
+        cssQuery: ''
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:8090/v2/cssquery?topologyName=amazon-blast')
+            .then(res => res.json())
+            .then(data => console.log(data))
+
+
+            // .then((data) => {
+            //     this.setState({crawls: data})
+            // })
+            // .catch(console.log)
+    }
+
+
     render() {
 
-        const cssQueries = {
-            css1: {
-                name: 'test1',
-                value: 'test1'
-            },
-            css2: {
-                name: 'test2',
-                value: 'test1'
-            }
-        }
-
-        let renderCssQuery =
-            Object.keys(cssQueries)
-                .map(css => (
-                    <div key={css}>
-                        <h2>{cssQueries[css].name}</h2>
-                        <p>{cssQueries[css].value}</p>
+        let renderCssQuery = (
+                    <div>
+                        <h2>{this.state.cssQuery.topologyName}</h2>
+                        <textarea>{this.state.cssQuery.cssQuery}</textarea>
                     </div>
-                ))
+        )
 
         return (
             <div>
+                {/*<Crawls/>*/}
                 {renderCssQuery}
             </div>
         )
