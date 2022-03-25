@@ -30,12 +30,12 @@ class Crawls extends Component {
     render() {
         return (
             <div className='crawls'>
-                <Form.Select>
-                    <option>Open this select menu</option>
+                <h1>Crawls en cours</h1>
+                <ul className="list-group list-group-flush">
                     {this.state.crawls.map(crawl => (
-                        <option key={crawl} value={crawl}>{crawl}</option>
+                        <li key={crawl}  className="list-group-item">{crawl}</li>
                     ))}
-                </Form.Select>
+                </ul>
             </div>
         );
     }

@@ -7,24 +7,6 @@ class CssQuery extends Component {
         cssQuery: ''
     }
 
-    componentDidMount() {
-
-        var myInit = { method: 'GET',
-            headers: new Headers(),
-            mode: 'no-cors',
-            cache: 'default' };
-
-        fetch('http://localhost:8090/v2/cssquery?topologyName=amazon-blast', myInit)
-            .then(res => res.json())
-            .then(data => console.log(data))
-
-            // .then((data) => {
-            //     this.setState({crawls: data})
-            // })
-            // .catch(console.log)
-    }
-
-
     render() {
 
         let renderCssQuery = (
