@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {Button, Form, Modal, ModalBody, ModalFooter, ModalTitle} from "react-bootstrap";
 import ModalHeader from "react-bootstrap/ModalHeader";
 
-class Content extends Component {
+class ContentDelete extends Component {
 
     state = {
         topologyName: '',
+        tags: '',
         isTopologyNameValid: false,
         isFormValid: false,
         isShowModal: false
@@ -30,12 +31,48 @@ class Content extends Component {
         this.setState({isShowModal: false})
     }
 
-    deleteContent = () => {
+    deleteContent = event => {
+        event.preventDefault()
+
+        const {serverUrl} = this.props
+        const {topologyName, tag} = this.state
+
+        let headers = new Headers()
+        headers.append("Content-Type", "text/json");
+
+        let requestParams = {
+            method: 'DELETE',
+            headers
+        };
+
+        if(tag === '') {
+
+            fetch(`${serverUrl}content?topologyName=${topologyName}`, requestParams)
+                .then((data) => {
+                    console.log(data)
+                })
+                .then((data) => {
+                    this.setState({output: data})
+                })
+                .catch(console.log)
+
+        } else {
+            fetch(`${serverUrl}content/byTag?topologyName=${topologyName}&tag=${tag}`, requestParams)
+                .then((data) => {
+                    console.log(data)
+                })
+                .then((data) => {
+                    this.setState({output: data})
+                })
+                .catch(console.log)
+        }
+
         console.log("delete content")
+        this.hideModal()
     }
 
     render() {
-        const {topologyName, isFormValid, isShowModal} = this.state
+        const {topologyName, isFormValid, isShowModal, tags} = this.state
 
         return (
             <div>
@@ -44,6 +81,11 @@ class Content extends Component {
                         <Form.Label>Topology name</Form.Label>
                         <Form.Control type="type" name='topologyName' placeholder="Enter topologyName" onChange={this.handleChange}
                                       value={topologyName}/>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Tags</Form.Label>
+                        <Form.Control type="type" name='tags' placeholder="Enter tags" onChange={this.handleChange}
+                                      value={tags}/>
                     </Form.Group>
                     <Button type='button' disabled={!isFormValid}
                             className='btn btn-primary' onClick={this.showModal}>Delete ean to url</Button>
@@ -68,4 +110,4 @@ class Content extends Component {
     }
 }
 
-export default Content;
+export default ContentDelete;

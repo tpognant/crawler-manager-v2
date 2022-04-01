@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Button, Form, Table} from "react-bootstrap";
-import Crawls from "./Crawls";
+import {Button, Form} from "react-bootstrap";
 import EanToUrlNav from "./EanToUrlNav";
 
 class EanToUrlGet extends Component {
 
     state = {
         topologyName: '',
+        output: '',
         isTopologyNameValid: false,
         isFormValid: false
     }
@@ -27,13 +27,26 @@ class EanToUrlGet extends Component {
 
     }
 
-    getEanToUrl = () => {
+    getEanToUrl = event => {
 
+        event.preventDefault()
+
+        const {serverUrl} = this.props
+        const {topologyName} = this.state
+
+        fetch(`${serverUrl}eantourl?topologyName=${topologyName}`)
+            .then((data) => {
+                console.log(data)
+            })
+            .then((data) => {
+                this.setState({output: data})
+            })
+            .catch(console.log)
     }
 
     render() {
 
-        const {topologyName, isTopologyNameValid, isFormValid} = this.state
+        const {topologyName, isTopologyNameValid, isFormValid, output} = this.state
 
         return (
             <>
@@ -42,11 +55,11 @@ class EanToUrlGet extends Component {
                     <Form.Group className="mb-3">
                         <Form.Label>Topology name</Form.Label>
                         <Form.Control type="type" name='topologyName' placeholder="Enter topology name"
-                                      onChange={this.handleChange} value={topologyName}
-                                      className={isTopologyNameValid ? 'is-valid' : 'is-invalid'}/>
+                                      onChange={this.handleChange} value={topologyName} />
                     </Form.Group>
-                    <Button onClick={this.getEanToUrl} disabled={!isFormValid} type="submit">Get ean to url</Button>
+                    <Button onClick={this.getEanToUrl} type="submit">Get ean to url</Button>
                 </Form>
+                <textarea rows='10' name='output' value={output} onChange={this.handleChange}/>
             </>
         );
     }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Form, Table} from "react-bootstrap";
-import Crawls from "./Crawls";
+import Crawls from "../stormui/Crawls";
 import EanToUrlNav from "./EanToUrlNav";
 
 class EanToUrlGet extends Component {
@@ -25,6 +25,27 @@ class EanToUrlGet extends Component {
 
     showModal = () => {
 
+    }
+
+    deleteEanToUrl = event => {
+        const {serverUrl} = this.props
+        const {topologyName} = this.state
+
+        event.preventDefault()
+
+        let headers = new Headers()
+        headers.append("Content-Type", "text/json");
+
+        let requestParams = {
+            method: 'DELETE',
+            headers
+        };
+
+        fetch(`${serverUrl}eantourl?topologyName=${topologyName}`, requestParams)
+            .then((data) => {
+                this.setState({output: data})
+            })
+            .catch(console.log)
     }
 
     render() {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Form from 'react-bootstrap/Form'
+import Crawl from "./Crawl";
 
 class Crawls extends Component {
 
@@ -8,7 +9,7 @@ class Crawls extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8080/api/v1/topology/summary')
+        fetch('http://10.130.194.20:8080/api/v1/topology/summary')
             .then(res => res.json())
             .then((data) => {
                 const topologies = []
@@ -29,13 +30,13 @@ class Crawls extends Component {
 
     render() {
         return (
-            <div className='crawls'>
-                <h1>Crawls en cours</h1>
-                <ul className="list-group list-group-flush">
+            <div>
+                <h2>Crawls en cours</h2>
+                <div className='cards'>
                     {this.state.crawls.map(crawl => (
-                        <li key={crawl}  className="list-group-item">{crawl}</li>
+                        <Crawl key={crawl} topologyName={crawl}/>
                     ))}
-                </ul>
+                </div>
             </div>
         );
     }
